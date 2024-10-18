@@ -45,6 +45,7 @@
             label2 = new Label();
             tbTitle = new TextBox();
             label1 = new Label();
+            lblError = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbImage).BeginInit();
             SuspendLayout();
@@ -52,6 +53,7 @@
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.Controls.Add(lblError);
             groupBox1.Controls.Add(lblYear);
             groupBox1.Controls.Add(btnAddAlbum);
             groupBox1.Controls.Add(lblArtist);
@@ -70,7 +72,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(776, 297);
+            groupBox1.Size = new Size(776, 334);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Add An Album";
@@ -224,11 +226,22 @@
             label1.TabIndex = 0;
             label1.Text = "Album Title";
             // 
+            // lblError
+            // 
+            lblError.AutoSize = true;
+            lblError.ForeColor = Color.Red;
+            lblError.Location = new Point(6, 294);
+            lblError.Name = "lblError";
+            lblError.Size = new Size(27, 20);
+            lblError.TabIndex = 18;
+            lblError.Text = "Err";
+            lblError.Visible = false;
+            // 
             // AddAlbum
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 320);
+            ClientSize = new Size(800, 357);
             Controls.Add(groupBox1);
             Name = "AddAlbum";
             Text = "AddAlbum";
@@ -257,5 +270,6 @@
         private Label lblTitle;
         private PictureBox pbImage;
         private Label lblYear;
+        private Label lblError;
     }
 }

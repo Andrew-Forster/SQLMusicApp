@@ -42,6 +42,34 @@ namespace SQLMusicApp
             return albums;
         }
 
+        public List<Track> LoadTracks(int albumID)
+        {
+            List<Track> tracks = new List<Track>();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM tracks WHERE albums_ID = @id";
+            cmd.Parameters.AddWithValue("@id", albumID);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Track track = new Track
+                {
+                    ID = reader.GetInt32("id"),
+                    Title = reader.GetString("Title"),
+                    Number = reader.GetInt32("Number"),
+                    VideoUrl = reader.GetString("Video_URL"),
+                    Lyrics = reader.GetString("Lyrics")
+                };
+                tracks.Add(track);
+            }
+            conn.Close();
+            return tracks;
+        }
+
+
+
         /// <summary>
         /// Adds an album to the database
         /// </summary>
@@ -59,6 +87,21 @@ namespace SQLMusicApp
             cmd.Parameters.AddWithValue("@year", album.Year);
             cmd.Parameters.AddWithValue("@image", album.ImageUrl);
             cmd.Parameters.AddWithValue("@desc", album.Description);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public void AddTrack(Track track)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO tracks (Title, Number, Video_URL, Lyrics, albums_ID) VALUES (@title, @number, @video, @lyrics, @albumID)";
+            cmd.Parameters.AddWithValue("@title", track.Title);
+            cmd.Parameters.AddWithValue("@number", track.Number);
+            cmd.Parameters.AddWithValue("@video", track.VideoUrl);
+            cmd.Parameters.AddWithValue("@lyrics", track.Lyrics);
+            cmd.Parameters.AddWithValue("@albumID", track.AlbumID);
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -101,6 +144,25 @@ namespace SQLMusicApp
                 MessageBox.Show("Error removing album, may have not existed in DB");
             }
             MessageBox.Show("Album removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void RemoveTrack(int id)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(connectionString);
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM tracks WHERE ID = @id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                MessageBox.Show("Error removing track, may have not existed in DB");
+            }
         }
     }
 }

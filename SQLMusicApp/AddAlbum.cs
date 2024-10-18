@@ -34,6 +34,8 @@ namespace SQLMusicApp
             {
                 lblTitle.Text = tbTitle.Text;
             }
+            checkInput();
+
         }
 
         private void TbImage_TextChanged(object sender, EventArgs e)
@@ -46,6 +48,8 @@ namespace SQLMusicApp
             {
                 pbImage.ImageLocation = tbImage.Text;
             }
+            checkInput();
+
         }
 
         private void TbDesc_TextChanged(object sender, EventArgs e)
@@ -58,6 +62,8 @@ namespace SQLMusicApp
             {
                 lblDesc.Text = tbDesc.Text;
             }
+            checkInput();
+
         }
 
         private void TbYear_TextChanged(object sender, EventArgs e)
@@ -70,6 +76,8 @@ namespace SQLMusicApp
             {
                 lblYear.Text = tbYear.Text;
             }
+            checkInput();
+
         }
 
         private void TbArtist_TextChanged(object sender, EventArgs e)
@@ -82,6 +90,7 @@ namespace SQLMusicApp
             {
                 lblArtist.Text = tbArtist.Text;
             }
+            checkInput();
 
         }
 
@@ -101,7 +110,14 @@ namespace SQLMusicApp
                     ImageUrl = tbImage.Text,
                     Description = tbDesc.Text
                 };
-                mainForm.AddAlbum(album);
+                try
+                {
+                    mainForm.AddAlbum(album);
+                }
+                catch
+                {
+                    MessageBox.Show("Error adding album, check your input");
+                }
 
                 this.Close();
             }
@@ -113,6 +129,37 @@ namespace SQLMusicApp
             {
                 pbImage.ImageLocation = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/991px-Placeholder_view_vector.svg.png";
             }
+        }
+
+        private void checkInput()
+        {
+            string errMsg = "";
+            if (string.IsNullOrWhiteSpace(tbDesc.Text))
+                errMsg = "Description cannot be empty\n";
+            if (string.IsNullOrWhiteSpace(tbImage.Text))
+                errMsg = "Image URL cannot be empty\n";
+            if (!int.TryParse(tbYear.Text, out int year))
+                errMsg = "Year must be a number\n";
+            if (string.IsNullOrWhiteSpace(tbYear.Text))
+                errMsg = "Year cannot be empty\n";
+            if (string.IsNullOrWhiteSpace(tbArtist.Text))
+                errMsg = "Artist cannot be empty\n";
+            if (string.IsNullOrWhiteSpace(tbTitle.Text))
+                errMsg = "Title cannot be empty\n";
+
+            if (errMsg != "")
+            {
+                lblError.Text = errMsg;
+                lblError.Visible = true;
+
+                btnAddAlbum.Enabled = false;
+            }
+            else
+            {
+                lblError.Visible = false;
+                btnAddAlbum.Enabled = true;
+            }
+
         }
     }
 }
