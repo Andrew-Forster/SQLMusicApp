@@ -19,8 +19,8 @@ In the second phase, I built the graphical user interface (GUI) using WinForms i
 
 ### Part 3: Completing CRUD Functionality and GUI Enhancements
 In the final phase, I extended the functionality of the music database GUI application. Key tasks included:
-- **Implementing full CRUD functionality** so the UI will allow users to update and delete album details directly from the data grid.
-- **Track Management** to manage individual tracks, including adding, updating, and removing tracks associated with each album.
+- **Implementing full CRUD functionality** so the UI will allow users to delete album details directly from the data grid.
+- **Track Management** to manage individual tracks, including adding, and removing tracks associated with each album.
 - **YouTube Video Playback** adding the ability to embed and play YouTube videos within the app for specific albums by using a WebView.
 
 ### What I Learned:
